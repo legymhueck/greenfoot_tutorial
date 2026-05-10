@@ -1,0 +1,166 @@
+= Steckbrief der Methode *getRandomNumber*
+
+== Lernziel
+
+Zufall kontrolliert einsetzen (`getRandomNumber`), etwa für Spawns, Streuung und Min/Max-Bereiche.
+
+== Aus welcher Klasse stammt die Methode?
+
+`Greenfoot`
+
+== Was macht die Methode?
+
+Anfrage. Liefert eine (Pseudo)Zufallszahl zwischen 0 (inklusive) und
+limit (exklusiv) zurück.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public static int getRandomNumber(int limit)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`static`
+|Die Methode kann ohne Objekt direkt über `Greenfoot` aufgerufen werden.
+
+|`int`
+|Rückgabetyp: Die Methode liefert eine Ganzzahl zurück.
+
+|`getRandomNumber`
+|Name der Methode.
+
+|`int limit`
+|Parameter für die Obergrenze (exklusiv). Bei `10` sind mögliche Werte `0` bis `9`.
+|===
+
+Da die Methode immer Zufallszahlen zwischen 0 (inklusive) und dem Limit
+(exklusive) liefert, muss man sich eines Tricks bedienen, um das fest
+stehende untere Limit zu umgehen.
+
+int bereich = Greenfoot.getRandomNumber(pMax – pMin + 1) + pMin;
+
+Die obige Methode wollen wir nun nutzen, um in der Welt z. B. zufällig
+mehrere Asteroiden zu verteilen, die an jeder Seite 40 Zellen vom Rand
+entfernt sind.
+
+Dazu brauchen wir das *obere Limit,* welches auf der x-Achse gleich der
+Breite der Welt ist. Die Breite können wir uns mit getWidth()
+zurückgeben lassen. Um 40 Zellen vom Rand entfernt zu bleiben, müssen
+wir 40 Zellen abziehen.
+
+Das *untere Limit* ist 40, weil wir 40 Zellen vom linken Rand entfernt
+bleiben wollen.
+
+Insgesamt müssen wir also die Breite der Welt um 80 Zellen beschränken
+(auf jeder Seite 40).
+
+Somit lautet unsere Methode allgemeingültig:
+
+int bereich = Greenfoot.getRandomNumber(getWidth() – 2 * rand + 1) +
+rand;
+
+Für unser obiges Beispiel lautet der Code also:
+
+
+[source,java]
+----
+public void objekteMitRandomNumber() {
+  for (int i = 0; i < 10; i++) {
+    int rand = 40;
+
+    int xBereich = Greenfoot.getRandomNumber(getWidth() - 2 * rand + 1) +
+      rand;
+
+    int yBereich = Greenfoot.getRandomNumber(getHeight() - 2 * rand + 1) +
+      rand;
+
+    Rakete rakete = new Rakete();
+    addObject(rakete, xBereich, yBereich);
+  }
+}
+
+----
+
+Um dies nicht immer so umständlich schreiben zu müssen, schreiben wir
+uns eine eigene Methode, bei der wir das untere und obere Limit beim
+Aufruf angeben können.
+
+
+[source,java]
+----
+public int zufallszahlStartBisEnde(int pMin, int pMax) {
+  int anzahlZufallszahlen = Greenfoot.getRandomNumber(pMax - pMin + 1);
+  int oberesLimit = anzahlZufallszahlen + pMin;
+  return oberesLimit;
+}
+
+public void objekteMitMinMaxMethode() {
+  for (int i = 0; i < 10; i++) {
+    Rakete rakete = new Rakete();
+
+    addObject(rakete, zufallszahlStartBisEnde(40, getWidth() - 40),
+      zufallszahlStartBisEnde(40, getHeight() - 40));
+  }
+}
+
+----
+
+Als zusätzlicher Praxisbezug: Soll bei der Berührung der Rakete mit dem
+Asteroiden eine neue Rakete erzeugt werden und diese jeweils in der Mitte
+erscheinen, braucht man die Methoden addObject, getWidth und getHeight.
+
+Alle diese Methoden stammen aus der Weltklasse, weshalb man diese
+Methoden erst benutzen kann, wenn man sich mit getWorld die Welt
+zurückgeben lässt, um dann die Methoden der Welt nutzen zu können.
+
+Der Code sieht dann so aus:
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Asteroid extends Actor {
+  public void act() {
+    kollisionskontrolle();
+    move(5);
+
+    if (isAtEdge()) {
+      turn(30);
+    }
+  }
+
+  public void kollisionskontrolle() {
+    if (isTouching(Rakete.class)) {
+      removeTouching(Rakete.class);
+
+      getWorld().addObject(new Rakete(), getWorld().getWidth() / 2,
+        getWorld().getHeight() / 2);
+    }
+  }
+}
+
+----
+
+
+
+== Übungsaufgaben
+
+1. Erzeuge 10 Objekte an zufälligen Positionen mit Randabstand.
+2. Schreibe eine eigene Min/Max-Zufallsmethode und nutze sie.
+3. Teste verschiedene Bereiche und prüfe die Verteilung grob visuell.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] den Wertebereich von `getRandomNumber(limit)` korrekt bestimmen?
+- [ ] Zufallswerte mit Mindest- und Höchstwert erzeugen?
+- [ ] Zufall gezielt für Spawn-Logik verwenden?

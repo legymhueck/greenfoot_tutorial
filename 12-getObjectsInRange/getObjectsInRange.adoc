@@ -1,0 +1,140 @@
+= Steckbrief der Methode *getObjectsInRange*
+
+== Lernziel
+
+Umgebungssuche und einfaches KI-Verhalten mit Radiusabfragen (`getObjectsInRange`) umsetzen.
+
+== Aus welcher Klasse stammt die Methode?
+
+`Actor`
+
+== Was macht die Methode?
+
+Anfrage. Gibt alle Objekte innerhalb der Reichweite _radius_ um das
+Objekt herum zurück.
+
+Ein anderes Objekt ist in Reichweite, wenn dessen Mitte von der Mitte
+des Actors kleiner oder gleich _radius_ entfernt ist.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+protected List getObjectsInRange(int radius, Class cls)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`protected`
+|Regelt, wer die Methode verwenden darf (Klasse und Unterklassen).
+
+|`List`
+|Rückgabetyp: Die Methode liefert eine Liste mit gefundenen Objekten.
+
+|`getObjectsInRange`
+|Name der Methode.
+
+|`int radius`
+|1. Parameter: Radius des Suchbereichs in Zellen.
+
+|`Class cls`
+|2. Parameter: Klasse der gesuchten Objekte.
+|===
+
+Übergabe von *null* bedeutet, nach **allen Objekten **zu suchen.
+
+Im folgenden Code folgt der Asteroid der Rakete, sobald er in seine Nähe
+kommt.
+
+
+[source,java,linenumbers]
+----
+import greenfoot.*;
+
+import java.util.List;
+
+public class Asteroid extends Actor {
+  public Asteroid() {
+  }
+
+  public void act() {
+    folgeRaumschiff();
+    move(4);
+  }
+
+  public void folgeDerRakete() {
+    List<Raumschiff> raumschiffeInUmgebung = getObjectsInRange(400, Raumschiff.class);
+
+    if (raumschiffeInUmgebung.size() > 0) {
+      Actor raumschiff = raumschiffeInUmgebung.get(0);
+      int raumschiffX = raumschiff.getX();
+      int raumschiffY = raumschiff.getY();
+
+      turnTowards(raunschiffXX, raumschiffY);
+    }
+  }
+}
+
+----
+
+Erläuterung der einzelnen Zeilen:
+
+[cols=",,",]
+|===
+|Zeile |Befehl |Erläuterung
+
+|3
+|`import java.util.List;`
+|Import, damit Listen genutzt werden können.
+
+|15
+|`List<Raumschiff>`
+|List ist der Datentyp, d. h. eine Liste, +
+<Raumschiff> ist das *Inhaltsobjekt*, also die Datentypen, die die Liste verwalten kann.
+< > wird auch als Diamantoperator bezeichnet.
+
+|15
+`|raumschiffeInUmgebung`
+|Das ist der Name der Variablen, die die Daten der Liste speichert.
+
+|15
+|getObjectsInRange(400, Raumschiff.class)
+|Gib die Objekte in einer Nähe von 400 Zellen zurück und der Klasse `Rakete` entsprechen.
+
+
+|17
+|`raumschiffeInUmgebung.size() > 0`
+|Falls die Größe (size) der Liste größer als 0 ist, d. h. falls sich
+mindestens ein Element in der Liste befindet …
+
+|18
+|`get(0)`
+|… dann hole das erste Element aus der Liste und speichere es in der Variablen `raumschiff` vom Datentyp `Actor`.
+
+|19 – 20
+|`int eineRaketeX = eineRakete.getX();` +
+`int eineRaketeY = eineRakete.getY();`
+|Speichere die X- und Y-Koordinaten des ersten Objekts der Liste
+
+|22
+|`turnTowards(eineRaketeX, eineRaketeY)`
+|Drehe dich in die Richtung der X- und Y-Koordinate der Objekte, hier des Raumschiffes.
+|===
+
+
+
+== Übungsaufgaben
+
+1. Ändere den Radius und beobachte das Verhalten.
+2. Lass ein Objekt nur reagieren, wenn mindestens zwei Ziele in Reichweite sind.
+3. Verarbeite statt der ersten Listeinträge alle gefundenen Objekte.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] Objekte im Umkreis mit `getObjectsInRange(...)` finden?
+- [ ] mit der Ergebnisliste (`List`) sicher arbeiten?
+- [ ] Radius und Klassenfilter gezielt anpassen?

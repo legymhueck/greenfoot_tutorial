@@ -1,0 +1,101 @@
+= Steckbriefe der Methoden *getWorld / getWorldOfType*
+
+== Lernziel
+
+Von einem Actor aus auf Weltfunktionen zugreifen (`getWorld`, `getWorldOfType`).
+
+== Aus welcher Klasse stammt die Methode?
+
+`Actor`
+
+== Was macht die Methode?
+
+Anfrage. Gibt das Eltern-Welt-Objekt zurück, also World.
+
+Da man von World keine Klasse erzeugen kann, muss man immer eine
+Kindklasse der Welt / eine spezielle Welt, z. B. einen Weltraum,
+erzeugen.
+
+Die Methode getWorld gibt aber das World-Objekt zurück und nicht die
+Kindklasse / spezielle Welt, sodass man wieder eine Typumwandlung (einen
+Typecast) machen muss, um die Kindklasse zurückzubekommen.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public World getWorld()
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`World`
+|Rückgabetyp: Die Methode liefert die aktuelle Welt zurück.
+
+|`getWorld()`
+|Name der Methode ohne Parameter.
+|===
+
+== Wie kann ich den Typecast umgehen?
+
+In Greenfoot gibt es eine Methode namens _getWorldOfType_, mit der man
+angeben kann, welche Welt man zurückbekommen möchte. Der Bauplan der
+Methode lautet:
+
+[source,java]
+----
+public <W> W getWorldOfType(java.lang.Class<W> worldClass)
+----
+
+Das sieht auf den ersten Blick kompliziert aus, ist es aber nicht.
+
+Im folgenden Code siehst du, wie beide Methoden benutzt werden, um das
+gleiche zu erreichen, nämlich die Breite der Welt aus dem Objekt
+Raumschiff zu erfragen und auf der Welt auszugeben.
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Raumschiff extends Actor {
+  public void act() {
+    Weltraum w = getWorldOfType(Weltraum.class);
+    Weltraum wR = (Weltraum) getWorld();
+
+    getWorld().showText("Breite: " + w.getWidth(), 100, 10);
+    getWorld().showText("Breite: " + wR.getWidth(), 100, 50);
+  }
+}
+
+----
+
+
+
+== Übungsaufgaben
+
+1. Greife aus einem Actor auf eine Methode der Welt zu.
+2. Setze sowohl `getWorld()` mit Typecast als auch `getWorldOfType(...)` ein.
+3. Vergleiche beide Varianten im gleichen Beispiel.
+
+== Mini-Projekt 2: Weltraum-Manager
+
+Ziel: Die Welt verwaltet den Spielzustand zentral.
+
+1. Lege in der Welt eine Punktvariable an.
+2. Aktualisiere den Punktestand aus einem Actor über Weltzugriff.
+3. Zeige den Punktestand und eine einfache Restleben-Anzeige an.
+4. Ergänze einen Neustart-Mechanismus, wenn ein Grenzwert erreicht ist.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] aus einem Actor auf die aktuelle Welt zugreifen?
+- [ ] den Unterschied zwischen `getWorld()` und `getWorldOfType(...)` erklären?
+- [ ] Weltlogik und Actor-Logik sauber trennen?

@@ -1,0 +1,97 @@
+= Steckbrief der Methode *getX / getY*
+
+== Lernziel
+
+Koordinaten lesen und gezielte Positionssteuerung mit `getX/getY` verstehen.
+
+== Aus welcher Klasse stammt die Methode?
+
+`Actor`
+
+== Was macht die Methode?
+
+* Gibt die x- bzw. y-Koordinate der aktuellen Position des Objektes als Ganzzahl zurück.
+* Der jeweils zurückgelieferte Wert entspricht dem horizontalen Index der Zelle,
+in der sich das Objekt befindet.
+* Die Zählung beginnt bei 0 (links oben) und bezieht sich auf das Zellraster der Welt.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public int getX()
+public int getY()
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`int`
+|Rückgabetyp: Die Methode liefert eine Ganzzahl zurück.
+
+|`getX`
+|Name der Methode für die x-Koordinate.
+
+|`getY`
+|Name der Methode für die y-Koordinate.
+|===
+
+Im folgenden Code der Welt werden zwei Objekte erzeugt, ein Raumschiff
+und ein Asteroid.
+
+
+[source,java,linenumbers]
+----
+import greenfoot.*;
+
+public class Weltraum extends World {
+  public Weltraum() {
+    super(600, 400, 1);
+
+    // Anonyme Instanziierung eines Objektes, d. h. ohne Variablenzuweisung
+    addObject(new Raumschiff(), 254, 100);
+    addObject(new Asteroid(), 100, 100);
+  }
+}
+
+----
+
+Falls sich die beiden Objekte, Raumschiff und Asteroid, treffen, wird die aktuelle Position ausgegeben.
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Asteroid extends Actor {
+  public void act() {
+    move(1);
+    if (isTouching(Raumschiff.class)) {
+      Raumschiff getroffenesRaumschiff = (Raumschiff)getOneIntersectingObject(Raumschiff.class);
+      getWorld().showText("X-Koordinate Raumschiff: " + getroffenesRaumschiff.getX(), 150, 10);
+      getWorld().showText("Y-Koordinate Raumschiff: " + getroffenesRaumschiff.getY(), 150, 30);
+    }
+    setLocation(getX() + 1, getY());
+  }
+}
+----
+
+
+
+== Übungsaufgaben
+
+1. Zeige die `x`- und `y`-Koordinaten eines Objekts dauerhaft an.
+2. Verschiebe ein Objekt gezielt nur auf der x-Achse.
+3. Erzeuge eine Bedingung, die bei einer bestimmten Koordinate reagiert.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] `getX()` und `getY()` korrekt verwenden?
+- [ ] Positionswerte in Bedingungen und Ausgaben nutzen?
+- [ ] mit Koordinaten gezielt Bewegungen steuern?

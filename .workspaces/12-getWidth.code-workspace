@@ -1,0 +1,22 @@
+{
+  "folders": [
+    {
+      "path": ".."
+    }
+  ],
+  "settings": {
+    "java.project.sourcePaths": [
+      "12-getWidth/Weltraum",
+      "greenfoot"
+    ],
+    "java.project.outputPath": ".vscode/.java-bin",
+    "java.configuration.runtimes": [
+      {
+        "name": "JavaSE-21",
+        "path": "/usr/lib/jvm/java-21-openjdk",
+        "default": true
+      }
+    ],
+    "java.configuration.updateBuildConfiguration": "interactive"
+  }
+}

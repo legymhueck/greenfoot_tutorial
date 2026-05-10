@@ -1,0 +1,96 @@
+= Steckbrief der Methode `turn()`
+
+== Lernziel
+
+Rotationen mit positiven/negativen Gradwerten steuern (`turn`) und Richtung als Zustand verstehen.
+
+== Aus welcher Klasse stammt die Methode?
+
+`Actor`
+
+== Was macht die Methode?
+
+* Dreht den `Actor` um den gegebenen Wert (in Grad).
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public void turn(int amount)
+----
+
+== Wie nennt man das, was in den runden Klammern steht?
+
+* *Parameter*. Ein Parameter ist das, was einer Methode beim Aufruf mitgegeben wird.
+* Wenn die Methode `turn` aufgerufen wird, muss man ihr eine Ganzzahl mitgeben, z. B. `turn(30)` oder `turn(-90)`.
+Die Ganzzahl (`int`) bedeutet hier die *Gradzahl*, um die sich der `Actor` dreht.
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`void`
+|Die Methode gibt nichts zurück, d. h. sie wird nur ausgeführt.
+
+|`turn`
+|Name der Methode.
+
+|`int`
+|Ganzzahl. Das Objekt kann sich nur um ganzzahlige Werte bewegen, keine Kommazahlen.
+
+|`amount`
+|Parameter, d. h. eine lokale Variable, die eine Ganzzahl speichert.
+
+|`amount` (Wert)
+|Die Gradzahl, um die sich der Actor drehen soll.
+
+|positiver Wert
+|Erzeugt eine Drehung im Uhrzeigersinn.
+
+|negativer Wert
+|Erzeugt eine Drehung gegen den Uhrzeigersinn.
+|===
+
+== Beispiel
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Rakete extends Actor {
+
+  /**
+  * Attribute
+  */
+
+  /**
+  * Konstruktor
+  */
+  public Rakete() {
+  }
+
+  // Beim Aufrufen der act()-Methode dreht sich der Actor, hier die Rakete,
+  // um 30 Grad nach rechts.
+  public void act() {
+    turn(30);
+  }
+}
+----
+
+
+== Übungsaufgaben
+
+1. Ändere die Drehung auf `turn(10)`, `turn(45)` und `turn(-15)`.
+2. Kombiniere `move(2)` und `turn(5)` in `act()`.
+3. Erkläre den Unterschied zwischen positiver und negativer Drehung in eigenen Worten.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] den Effekt von `turn(amount)` sicher vorhersagen?
+- [ ] positive/negative Winkelwerte korrekt verwenden?
+- [ ] Bewegung und Drehung in einer `act()`-Methode kombinieren?

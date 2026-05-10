@@ -1,0 +1,114 @@
+= Steckbrief der Methode *getWidth / getHeight*
+
+== Lernziel
+
+Weltmaße dynamisch nutzen (`getWidth/getHeight`), zum Beispiel für Zentrierung und robuste Platzierung.
+
+== Aus welcher Klasse stammt die Methode?
+
+`World`
+
+== Was macht die Methode?
+
+Anfrage. Gibt die Breite der Welt zurück (in Anzahl der Zellen).
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public int getWidth()
+public int getHeight()
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`int`
+|Rückgabetyp: Die Methode liefert eine Ganzzahl zurück.
+
+|`getWidth()`
+|Name der Methode für die Breite der Welt.
+
+|`getHeight()`
+|Name der Methode für die Höhe der Welt.
+|===
+
+Im folgenden Code siehst du, wie ein Objekt mittels der Methode getWidth
+und getHeight immer exakt in die Mitte der Welt gesetzt wird, egal
+welche Größe die Welt hat.
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Weltraum extends World {
+  public Weltraum() {
+    super(800, 600, 1);
+
+    Rakete rakete = new Rakete();
+    addObject(rakete, 100, 100);
+
+    Asteroid asteroid = new Asteroid();
+    addObject(asteroid, getWidth() / 2, getHeight() / 2);
+  }
+}
+
+----
+
+Soll bei der Berührung der Rakete mit dem Asteroiden eine neue Rakete
+erzeugt werden und diese jeweils in der Mitte erscheinen, braucht man
+die Methoden addObject, getWidth und getHeight.
+
+Alle diese Methoden stammen aus der Weltklasse, weshalb man diese
+Methoden erst benutzen kann, wenn man sich mit getWorld die Welt
+zurückgeben lässt, um dann die Methoden der Welt nutzen zu können.
+
+Der Code sieht dann so aus:
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Asteroid extends Actor {
+  public void act() {
+    kollisionskontrolle();
+    move(5);
+
+    if (isAtEdge()) {
+      turn(30);
+    }
+  }
+
+  public void kollisionskontrolle() {
+    if (isTouching(Rakete.class)) {
+      removeTouching(Rakete.class);
+
+      getWorld().addObject(new Rakete(), getWorld().getWidth() / 2,
+        getWorld().getHeight() / 2);
+    }
+  }
+}
+
+----
+
+
+
+== Übungsaufgaben
+
+1. Setze ein Objekt automatisch in die Mitte der Welt.
+2. Platziere ein Objekt relativ zur Weltgröße (z. B. Viertelposition).
+3. Baue eine Spawn-Logik, die auch bei anderer Weltgröße korrekt bleibt.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] `getWidth()` und `getHeight()` sinnvoll einsetzen?
+- [ ] Positionen relativ zur Weltgröße berechnen?
+- [ ] erklären, warum feste Pixelwerte oft unflexibel sind?

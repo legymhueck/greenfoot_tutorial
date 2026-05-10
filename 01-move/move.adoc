@@ -1,0 +1,70 @@
+= Steckbrief der Methode `move()`
+
+== Lernziel
+
+Objekte entlang ihrer Blickrichtung bewegen (`move`) und Vorwärts-/Rückwärtsbewegung verstehen.
+
+== Aus welcher Klasse stammt die Methode?
+
+* *Actor*
+
+== Was macht die Methode?
+
+* Sie bewegt einen Actor um die angegebene Distanz.
+* Die Richtung der Bewegung entspricht der Blickrichtung des Actors.
+* Positive Werte bewegen den Actor vorwärts, negative Werte bewegen ihn rückwärts.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public void move(int distance)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,3"]
+|===
+|Wort |Bedeutung
+
+|`public` |Andere Klassen können auf die Methode zugreifen. 
+|`void` |Die Methode gibt nichts zurück. 
+|`move` |Name der Methode. 
+|`int` |Ganzzahltyp; nur ganze Zahlen sind erlaubt. 
+|`distance` |Parameter, der die zu bewegende Distanz in Zellen angibt. +
+* Positiver Wert → Bewegung nach vorne +
+* Negativer Wert → Bewegung nach hinten
+|===
+
+== Beispielcode
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Rakete extends Actor {
+
+    // Konstruktor
+    public Rakete() {
+    }
+
+    // Beim Aufruf der act()-Methode bewegt sich die Rakete
+    // um 1 Zelle in die Richtung, in die sie gerade zeigt.
+    public void act() {
+        move(1);
+    }
+}
+----
+
+
+== Übungsaufgaben
+
+1. Lasse die Rakete mit `move(2)` schneller fliegen und beobachte den Unterschied.
+2. Probiere `move(-2)` aus und beschreibe, was passiert.
+3. Wechsle in `act()` zwischen `move(1)` und `move(3)` und vergleiche das Flugverhalten.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] erklären, was `move(int distance)` macht?
+- [ ] positive und negative Distanzwerte sinnvoll einsetzen?
+- [ ] die Bewegungsgeschwindigkeit durch den Distanzwert steuern?

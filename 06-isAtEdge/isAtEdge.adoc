@@ -1,0 +1,91 @@
+= Steckbrief der Methode *isAtEdge*
+
+== Lernziel
+
+Randbedingungen abfangen und Spielfiguren sicher in der Welt halten (`isAtEdge`).
+
+== Aus welcher Klasse stammt die Methode?
+
+`Actor`
+
+== Was macht die Methode?
+
+Anfrage, ob der Actor den Rand der Welt erreicht hat.
+
+Der Actor ist am Rand der Welt, wenn seine Position das horizontale oder
+vertikale Ausmaß der Welt erreicht hat oder darüber liegt.
+
+Beispiel: Ist die Welt 640 mal 480 Zellen groß, ist ein Actor am Rand der
+Welt, wenn seine X-Position <= 0 oder >= 639 erreicht, oder seine
+Y-Position <= 0 oder >= 479 erreicht.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public boolean isAtEdge()
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`boolean`
+|Rückgabetyp: `true`, wenn der Actor am Rand ist, sonst `false`.
+
+|`isAtEdge`
+|Name der Methode.
+|===
+
+Im folgenden Code soll das Raumschiff vom Rand der Welt abprallen, falls
+man durch die Steuerung mit den Pfeiltasten den Rand berührt.
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Rakete extends Actor {
+  public void act() {
+    if (isAtEdge()) {
+      turn(30);
+    }
+
+    if (Greenfoot.isKeyDown("left")) {
+      turn(-10);
+    }
+
+    if (Greenfoot.isKeyDown("right")) {
+      turn(10);
+    }
+
+    if (Greenfoot.isKeyDown("up")) {
+      move(10);
+    }
+
+    if (Greenfoot.isKeyDown("down")) {
+      move(-10);
+    }
+  }
+}
+
+----
+
+
+
+== Übungsaufgaben
+
+1. Lasse das Objekt am Rand um einen anderen Winkel abprallen.
+2. Kombiniere die Randprüfung mit Tastatursteuerung.
+3. Erzeuge eine Reaktion, die nur am linken oder rechten Rand ausgelöst wird.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] mit `isAtEdge()` den Weltrand zuverlässig erkennen?
+- [ ] Randreaktionen sinnvoll in `act()` einbauen?
+- [ ] erklären, warum Randlogik für stabile Spiele wichtig ist?

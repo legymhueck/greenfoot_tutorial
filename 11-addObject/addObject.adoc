@@ -1,0 +1,184 @@
+= Steckbrief der Methode *addObject*
+
+== Lernziel
+
+Neue Objekte erzeugen und korrekt über die Welt platzieren (`new`, `addObject`).
+
+== Aus welcher Klasse stammt die Methode?
+
+`World`
+
+== Was macht die Methode?
+
+Platziert ein Actor-Objekt an einer bestimmten Position auf der Welt.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public void addObject(Actor object, int x, int y)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`void`
+|Die Methode führt eine Aktion aus. Sie gibt nichts zurück.
+
+|`addObject`
+|Name der Methode.
+
+|`Actor object`
+|1. Parameter: Das Objekt, das auf die Welt gesetzt wird.
+
+|`int x`
+|2. Parameter: x-Koordinate der Position.
+
+|`int y`
+|3. Parameter: y-Koordinate der Position.
+|===
+
+== Wie erzeugt man neue Objekte?
+
+Um ein neues Actor-Objekt zu erzeugen, z. B. ein neues Raumschiff,
+schreibt man
+
+[source,java]
+----
+Raumschiff raumschiff = new Raumschiff();
+----
+
+
+Was bedeuten die einzelnen Wörter bei der Objekterzeugung?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|_Raumschiff_
+|Zuerst gibt man die *Klasse* (d. h. den *Bauplan für das
+Objekt*) an, von dem man ein neues Objekt erzeugen möchte.
+
+|_raumschiff_
+|Dann gibt man den Namen der *Variablen* an, in die man das
+neue Raumschiff speichern möchte. Der Name kann frei gewählt werden,
+wobei man sich an die Regeln für Variablennamen halten sollte: Man beginnt mit einem Kleinbuchstaben und scheibt
+jedes weitere Wort (egal welche Wortart) zu Beginn groß (*CamelCase*).
+
+Dann folgt der *Zuweisungsoperator*. Er bedeutet, dass alles, was auf
+der rechten Seite steht, in der Variablen auf der linken Seite, gespeichert wird. Es wird also auf der rechten Seite ein neues
+Raumschiff erzeugt und in der Variablen _raumschiff_ gespeichert.
+
+|_new_
+|Der *new-Operator* dient dem Erzeugen eines neuen Objekts /
+Exemplars einer Klasse. Operand von new ist (d. h. nach new steht) ein
+Aufruf des *Konstruktors* der Klasse, von dem ein Exemplar erzeugt
+werden soll.
+
+|_Raumschiff()_
+|Nach `new` wird also der Konstruktor der Raumschiff-Klasse
+aufgerufen. Im Konstruktor steht, wie das Objekt beim Erzeugen
+konstruiert werden soll. Beim Raumschiff könnte dort stehen, dass
+bestimmte Startwerte festgelegt werden, z. B. für den Treibstoff, die
+Anzahl an Raumschiffen o. Ä. In unserem Fall ist der Konstruktor noch leer.
+|===
+
+== Wichtig!
+
+*Nur die Welt kann Objekte auf der Welt platzieren.*
+
+Folgender Code steht daher in der Welt-Klasse:
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Weltraum extends World {
+  /**
+  * Attribute
+  */
+
+  /**
+  * Konstruktor
+  */
+  public Weltraum() {
+    super(600, 400, 1);
+    Raumschiff raumschiff = new Raumschiff();
+    addObject(raumschiff, 100, 100);
+  }
+}
+
+----
+
+Möchte ein Actor ein Objekt auf die Welt setzen, z. B. weil beim
+Berühren eines Objekts neue Objekte erzeugt werden sollen, geschieht das
+immer mit dem Umweg über die Welt. Dazu *holt man sich mit
+**_getWorld()_** die Welt* und ruft dann die Methode `addObject` auf.
+
+Hier ein Beispiel aus unserem Weltraum-Szenario:
+
+image:isTouching.png[width=198,height=84]
+
+Nach dem Berühren des Asteroiden soll ein neues Raumschiff erzeugt werden.
+
+Der Actor muss sich dazu mit _getWorld()_ die Welt geben lassen, und
+erst diese kann dann ein neues Raumschiff auf die Welt setzen.
+
+getWorld().addObject(raumschiff, 200, 200);
+
+Wir hatten ja schon in der Dokumentation der Methode _addObject_
+gesehen, dass diese Methode aus der Welt-Klasse stammt, sodass auch nur
+über die Welt diese Methode aufgerufen werden kann.
+
+Hier der Code aus der Raumschiff-Klasse:
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Raumschiff extends Actor {
+  /**
+  * Attribute
+  */
+
+  /**
+  * Konstruktor
+  */
+  public Raumschiff() {
+  }
+
+  public void act() {
+    move(1);
+
+    if (isTouching(Asteroid.class)) {
+      Raumschiff raumschiff = new Raumschiff();
+      getWorld().addObject(raumschiff, 200, 200);
+    }
+  }
+}
+----
+
+Das Resultat sieht dann so aus:
+
+image:isTouching_addObject.png[width=200,height=165]
+
+
+== Übungsaufgaben
+
+1. Erzeuge im Weltraum-Konstruktor zwei Raumschiffe an unterschiedlichen Positionen.
+2. Lass bei einer Berührung ein weiteres Objekt über `getWorld().addObject(...)` entstehen.
+3. Ändere die Spawn-Positionen und prüfe, ob das Verhalten stabil bleibt.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] Objekte mit `new` erzeugen?
+- [ ] den Unterschied zwischen Actor-Klasse und World-Klasse erklären?
+- [ ] `addObject(...)` an der richtigen Stelle aufrufen?

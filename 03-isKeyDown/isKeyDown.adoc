@@ -1,0 +1,145 @@
+= Steckbrief der Methode *isKeyDown*
+
+== Lernziel
+
+Tastatursteuerung mit `isKeyDown` umsetzen, zuerst mit `move/turn`, danach mit Positionslogik.
+
+== Aus welcher Klasse stammt die Methode?
+
+`Greenfoot`
+
+== Was macht die Methode?
+
+Anfrage, ob eine bestimmte Taste zurzeit gedrückt ist.
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public static boolean isKeyDown(String keyName)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|_public_
+|Andere Klassen können auf die Methode zugreifen.
+
+|_static_
+|Die Methode kann auch aufgerufen werden, ohne dass ein Objekt
+zuvor erzeugt wurde.
+
+|_boolean_
+| Es handelt sich um eine Anfrage, die „true“ oder „false“ („ja“
+oder „nein“ / „wahr“ oder „falsch“) zurückgibt; die Anfrage ist „true“,
+wenn die Taste gedrückt wird, ansonsten „false“.
+
+|_isKeyDown_
+|Name der Methode.
+
+|_String_
+|Als Parameter wird eine Zeichenkette erwartet.
+
+|_keyName_
+|Name des Parameters, d. h. der zu überprüfenden Taste.
+|===
+
+== Für keyName gibt es folgende Möglichkeiten:
+
+* _"a", "b", … "z"_ (alphabetische Tasten),
+* _"0" … "9"_ (Ziffern),
+* die meisten Satzzeichen,
+* _"up", "down", "left", "right"_ (die Pfeiltasten),
+* _"enter", "space", "tab", "escape", "backspace", "shift", "control"_
+(spezielle Tasten),
+* _"F1", "F2", … "F12"_ (die Funktionstasten).
+
+Folgender Code ermöglicht die Steuerung der Rakete mit den Pfeiltasten
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Raumschiff extends Actor {
+  public Raumschiff() {
+  }
+
+  public void act() {
+    if (Greenfoot.isKeyDown("left")) {
+      turn(-10);
+    }
+
+    if (Greenfoot.isKeyDown("right")) {
+      turn(10);
+    }
+
+    if (Greenfoot.isKeyDown("up")) {
+      move(10);
+    }
+
+    if (Greenfoot.isKeyDown("down")) {
+      move(-10);
+    }
+  }
+}
+
+----
+
+Bei der Verwendung von getX und getY würde das Raumschiff seitwärts nach
+links und rechts steuern, was unnatürlich aussieht, weil der
+Antriebsstrahl hinten ist.
+
+Der Code sähe so aus:
+
+
+[source,java]
+----
+import greenfoot.*;
+
+public class Raumschiff extends Actor {
+  /**
+  * Objektvariablen / Instanzvariablen / Attribute
+  */
+
+  /**
+  * Konstruktor
+  */
+  public Raumschiff() {
+  }
+
+  public void act() {
+    if (Greenfoot.isKeyDown("left")) {
+      setLocation(getX() - 1, getY());
+    }
+
+    if (Greenfoot.isKeyDown("right")) {
+      setLocation(getX() + 1, getY());
+    }
+
+    if (Greenfoot.isKeyDown("up")) {
+      setLocation(getX(), getY() - 1);
+    }
+
+    if (Greenfoot.isKeyDown("down")) {
+      setLocation(getX(), getY() + 1);
+    }
+  }
+}
+----
+
+
+== Übungsaufgaben
+
+1. Passe die Drehgeschwindigkeit für links/rechts separat an.
+2. Ergänze eine Taste (z. B. `space`), die eine spezielle Aktion auslöst.
+3. Baue eine Variante, in der nur mit Pfeiltasten vorwärts geflogen wird.
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] Tastenabfragen mit `Greenfoot.isKeyDown(...)` schreiben?
+- [ ] eine Steuerung mit mehreren Tasten strukturieren?
+- [ ] sinnvolle Tastenbezeichnungen (`left`, `right`, `up`, `down`) verwenden?
