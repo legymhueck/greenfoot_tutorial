@@ -3,7 +3,7 @@ import greenfoot.*;
 public class Weltraum extends World {
 
     public Weltraum() {    
-        super(600, 400, 1);
-        addObject(new Rakete(), 100, 100);
+        super(800, 600, 1);
+        addObject(new Raumschiff(), 100, 100);
     }
 }

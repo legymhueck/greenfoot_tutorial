@@ -1,8 +1,7 @@
 import greenfoot.*;
 
-public class Rakete extends Actor {
+public class Asteroid extends Actor {
   
     public void act() {
-        
     }    
 }

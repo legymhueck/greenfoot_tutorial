@@ -1,0 +1,236 @@
+= Steckbrief der Methode *showText*
+
+== Lernziel
+
+Status- und Spielfeedback auf der Welt anzeigen (`showText`), zum Beispiel Koordinaten oder Punkte.
+
+== Aus welcher Klasse stammt die Methode?
+
+`World`
+
+== Was macht die Methode?
+
+* Zeigt Text auf der Welt an.
+* Der x- und y-Wert auf der Welt repräsentiert die Mitte des Textes und
+NICHT seine (linke) Anfangsposition!
+
+== Wie sieht der Bauplan der Methode aus?
+
+[source,java]
+----
+public void showText(String text, int x, int y)
+----
+
+== Was bedeuten die einzelnen Wörter?
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Bedeutung
+
+|`public`
+|Andere Klassen können auf die Methode zugreifen.
+
+|`void`
+|stammt die Methode. Sie gibt nichts zurück.
+
+|`showText`
+|Name der Methode.
+
+|`String text`
+|1. Parameter: Der anzuzeigende Text.
+
+|`int x`
+|2. Parameter: x-Koordinate der Textmitte.
+
+|`int y`
+|3. Parameter: y-Koordinate der Textmitte.
+|===
+
+Im folgenden Code werden die Koordinaten des Raumschiffs auf der Welt
+angezeigt, wenn run() aufgerufen wird.
+
+
+[source,java,linenumbers]
+----
+import greenfoot.*;
+
+public class Weltraum extends World {
+  private Raumschiff r;
+
+  public Weltraum() {
+    super(600, 400, 1);
+
+    r = new Raumschiff();
+    addObject(r, 100, 100);
+  }
+
+  // Die Koordinaten des Raumschiffes werden auf der Welt angezeigt.
+  public void act() {
+    showText("x:" + r.getX() + ", y:" + r.getY(), 100, 20);
+  }
+}
+----
+
+[source,java,linenumbers]
+----
+public class Raumschiff extends Actor {
+
+  public void act() {
+    move(4);
+    if (isAtEdge()) {
+      turn(15);
+    }
+  }
+}
+----
+
+== Alternative: Text mit `drawString(...)` zeichnen
+
+Wenn dir die Darstellung von `showText(...)` nicht gefaellt, kannst du Text
+direkt auf ein `GreenfootImage` zeichnen.
+
+Wichtig:
+
+* `drawString(...)` gehoert zu `GreenfootImage`, nicht zu `World`.
+* Du bestimmst Schriftart, Schriftgroesse und Farbe selbst.
+* Der Text bleibt auf dem Bild stehen. Darum musst du vor jedem neuen Zeichnen
+den Bereich loeschen oder den Hintergrund neu zeichnen.
+
+=== Bauplan der zentralen Methode
+
+[source,java]
+----
+public void drawString(String string, int x, int y)
+----
+
+Merke:
+
+* Bei `drawString(...)` ist `y` die *Basislinie* des Textes (nicht die obere Kante).
+* Bei `showText(...)` beschreiben `x` und `y` die *Textmitte*.
+
+=== Einfaches Beispiel in der Welt
+
+[source,java,linenumbers]
+----
+import greenfoot.*;
+
+public class Weltraum extends World {
+  private final Raumschiff r;
+  private final GreenfootImage originalBackground;
+
+  public Weltraum() {
+    super(800, 700, 1);
+    r = new Raumschiff();
+    addObject(r, getWidth() / 2, getHeight() / 2);
+    originalBackground = new GreenfootImage(getBackground());
+  }
+
+  public void act() {
+    drawCoordinates();
+  }
+
+  private void drawCoordinates() {
+    GreenfootImage bg = getBackground();
+    bg.drawImage(originalBackground, 0, 0);  // alten Text entfernen
+
+    GreenfootImage hud = new GreenfootImage(180, 36);
+    hud.setColor(new Color(0, 0, 0, 170));
+    hud.fill();
+    hud.setColor(Color.WHITE);
+    hud.setFont(new Font("Arial", false, false, 20));
+    hud.drawString("x: " + r.getX() + "   y: " + r.getY(), 8, 25);
+
+    bg.drawImage(hud, 10, 8);
+  }
+}
+----
+
+=== Wann `showText(...)`, wann `drawString(...)`?
+
+* `showText(...)`: sehr schnell und einfach fuer kurze Hinweise.
+* `drawString(...)`: besser, wenn du das Aussehen (Font, Farbe, Hintergrund)
+genau steuern willst.
+
+[TIP]
+====
+Merkliste:
+
+* `showText(...)` nutzen, wenn du schnell Text ohne Designaufwand anzeigen willst.
+* `drawString(...)` nutzen, wenn du Schrift, Farbe und Hintergrund gezielt gestalten willst.
+====
+
+=== Methoden und Parameter im `drawString`-Beispiel
+
+[cols="2,3,5",options="header"]
+|===
+|Methode (Bauplan) |Klasse |Parameter erklaert
+
+|`showText(String text, int x, int y)`
+|`World`
+|`text`: anzuzeigender Text; `x`: x-Position der *Textmitte*; `y`: y-Position der *Textmitte*.
+
+|`getBackground()`
+|`World`
+|Keine Parameter. Liefert das Hintergrundbild der Welt als `GreenfootImage`.
+
+|`drawImage(GreenfootImage image, int x, int y)`
+|`GreenfootImage`
+|`image`: Bild, das gezeichnet wird; `x`: linke obere x-Position; `y`: linke obere y-Position.
+
+|`setColor(Color color)`
+|`GreenfootImage`
+|`color`: Zeichen-/Fuellfarbe, z. B. `Color.WHITE` oder `new Color(0, 0, 0, 170)`.
+
+|`fill()`
+|`GreenfootImage`
+|Keine Parameter. Fuellt das ganze Bild mit der aktuell gesetzten Farbe.
+
+|`setFont(Font font)`
+|`GreenfootImage`
+|`font`: Schriftobjekt, z. B. `new Font("Arial", false, false, 20)`.
+
+|`drawString(String string, int x, int y)`
+|`GreenfootImage`
+|`string`: Textinhalt; `x`: Start-x der Schrift; `y`: y-Basislinie des Textes.
+
+|`getX()`
+|`Actor`
+|Keine Parameter. Liefert die aktuelle x-Koordinate des Objekts.
+
+|`getY()`
+|`Actor`
+|Keine Parameter. Liefert die aktuelle y-Koordinate des Objekts.
+
+|`new GreenfootImage(int width, int height)`
+|`GreenfootImage` (Konstruktor)
+|`width`: Breite des neuen Bildes in Pixel; `height`: Hoehe in Pixel.
+
+|`new GreenfootImage(GreenfootImage image)`
+|`GreenfootImage` (Konstruktor)
+|`image`: vorhandenes Bild, das 1:1 kopiert wird.
+
+|`new Color(int r, int g, int b, int a)`
+|`Color` (Konstruktor)
+|`r`,`g`,`b`: Farbanteile 0-255; `a`: Transparenz 0-255 (`0` unsichtbar, `255` voll deckend).
+
+|`new Font(String name, boolean bold, boolean italic, int size)`
+|`Font` (Konstruktor)
+|`name`: Schriftname; `bold`: fett ja/nein; `italic`: kursiv ja/nein; `size`: Schriftgroesse.
+|===
+
+== Übungsaufgaben
+
+1. Gib statt Koordinaten einen eigenen Status-Text aus.
+2. Zeige zusätzlich die Rotation des Raumschiffes rechts neben seinen Koordinaten.
+3. Erzeuge ein zweites Objekt und zeige seine Position an einer anderen Stelle an.
+4. Lösche `Private Raumschiff r` und erzeuge stattdessen das Raumschiff im Konstruktor.
+Begründe, warum das nicht funktioniert.
+
+
+== Checkliste: Kann ich jetzt ...?
+
+- [ ] Text mit `showText(...)` an der richtigen Position anzeigen?
+- [ ] erklären, dass `x`/`y` die Textmitte beschreiben?
+- [ ] dynamische Werte (z. B. Koordinaten) im Text zusammenbauen?
+- [ ] Text mit `drawString(...)` auf ein `GreenfootImage` zeichnen?
+- [ ] erklären, warum man bei `drawString(...)` alten Text aktiv entfernen muss?
