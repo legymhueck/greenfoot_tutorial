@@ -16,12 +16,13 @@ Folgende Themen und Methoden werden behandelt:
 * **05 - `getWidth()`:** Breite von Bildern/Objekten ermitteln.
 * **06 - `getWorld()`:** Zugriff auf die Welt-Klasse aus einem Akteur heraus.
 * **06 - `isAtEdge()`:** Erkennen, ob der Bildschirmrand erreicht wurde.
-* **08 - `getRandomNumber()`:** Zufallszahlen generieren (z.B. für Spawns oder zufällige Bewegungen).
-* **09 - `showText()`:** Text auf dem Bildschirm anzeigen (z.B. für einen Score).
+* **08 - `getRandomNumber()`:** Zufallszahlen generieren (z. B. für Spawns oder zufällige Bewegungen).
+* **09 - `showText()`:** Text auf dem Bildschirm anzeigen (z. B. für einen Score).
 * **10 - `isTouching()`, `removeTouching()`:** Einfache Kollisionserkennung zwischen Objekten.
-* **11 - `addObject()`:** Neue Objekte während der Laufzeit zur Welt hinzufügen (z.B. Laser oder neue Gegner).
+* **11 - `addObject()`:** Neue Objekte während der Laufzeit zur Welt hinzufügen (z. B. Laser oder neue Gegner).
 * **12 - `getObjectsInRange()`:** Objekte in einem bestimmten Radius finden.
 * **13 - `getOneIntersectingObject()`:** Genauer prüfen, ob sich Objekte überschneiden.
+* **14 - `List<Typparameter>`:** Objekte in einer Liste speichern; Listenmethoden
 
 ## Wie starte ich das Projekt?
 

@@ -1,0 +1,93 @@
+= Animierte Bilder anzeigen
+
+== Lernziel
+
+Eine Animation aus mehreren vorbereiteten Bildern aufbauen und in `act()` Schritt für Schritt abspielen.
+
+== Beispiel
+
+[source,java]
+----
+private List<GreenfootImage> imagesOfProtonWave = new ArrayList<>();
+private int currentImage = 0;
+
+public ProtonWave() {
+    GreenfootImage baseImage = new GreenfootImage("wave.png");
+    for (int i = 0; i < 20; i++) {
+        GreenfootImage img = new GreenfootImage(baseImage);
+        int size = (i + 1) * (baseImage.getWidth() / 20);
+        img.scale(size, size);
+        imagesOfProtonWave.add(img);
+    }
+    setImage(imagesOfProtonWave.get(0));
+}
+
+public void act() {
+    currentImage++;
+    if (currentImage < imagesOfProtonWave.size()) {
+        setImage(imagesOfProtonWave.get(currentImage));
+    }
+}
+----
+
+== Erläuterung
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Erläuterung
+
+|`GreenfootImage`
+|Bildklasse von Greenfoot. Sie wird verwendet, um einzelne Animationsbilder zu laden, zu kopieren und zu skalieren.
+
+|`List<GreenfootImage>`
+|Liste für alle Bilder der Animation. So müssen die Bilder nicht in jedem `act()`-Schritt neu berechnet werden.
+
+|`new GreenfootImage("wave.png")`
+|Lädt das Ausgangsbild für die Animation.
+
+|`new GreenfootImage(baseImage)`
+|Erzeugt eine Kopie des Ausgangsbildes, damit jedes Animationsbild separat verändert werden kann.
+
+|`scale(width, height)`
+|Skaliert das Bild auf eine neue Größe. Damit entsteht zum Beispiel eine wachsende Welle.
+
+|`setImage(...)`
+|Setzt das aktuell sichtbare Bild des Actors.
+
+|`currentImage`
+|Zähler für das aktuell angezeigte Bild aus der Liste.
+
+|`act()`
+|Wird in jedem Simulationsschritt aufgerufen und steuert die Animation.
+
+|`growing`
+|Hilfsvariable in der Variante mit Wachsen und Schrumpfen. Sie bestimmt die Richtung der Animation.
+
+|`addedToWorld(World world)`
+|Wird ausgeführt, wenn der Actor zur Welt hinzugefügt wird. In der zweiten Variante wird hier der Text zur Bildnummer aktualisiert.
+
+|`showText(...)`
+|Zeigt den aktuellen Zustand direkt in der Welt an, zum Beispiel die Bildnummer der Animation.
+|===
+
+== Zusammenfassung
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Erläuterung
+
+|Bilder vorberechnen
+|Alle Animationsbilder werden einmal im Konstruktor erzeugt und gespeichert.
+
+|Animation abspielen
+|`act()` schaltet von Bild zu Bild weiter und macht die Bewegung sichtbar.
+
+|Grenzen beachten
+|Wenn das letzte Bild erreicht ist, muss die Animation entweder stoppen oder die Richtung wechseln.
+
+|Richtung wechseln
+|In der erweiterten Variante sorgt `growing` dafür, dass die Welle wieder schrumpfen kann.
+
+|Status anzeigen
+|Mit `showText()` kann die aktuelle Bildnummer direkt in der Welt sichtbar gemacht werden.
+|===

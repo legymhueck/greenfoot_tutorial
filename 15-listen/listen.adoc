@@ -1,0 +1,73 @@
+= Listen
+
+== Lernziel
+
+Objekte auf der Welt zählen und die Anzahl sichtbar anzeigen.
+
+== Beispiel
+
+[source,java]
+----
+List<Raumschiff> raumschiffeAufWelt = getWorld().getObjects(Raumschiff.class);
+int anzahl = raumschiffeAufWelt.size();
+getWorld().showText(String.valueOf(anzahl), 100, 100);
+----
+
+== Erläuterung
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Erläuterung
+
+|`List`
+|Datentyp für eine Liste. Er wird großgeschrieben, weil es sich um ein Objekt handelt.
+
+|`<Raumschiff>`
+|Typparameter: Er legt fest, dass die Liste Objekte vom Typ `Raumschiff` enthalten soll.
+
+|`raumschiffeAufWelt`
+|Name der Liste, in der die gefundenen Raumschiffe gespeichert werden.
+
+|`getWorld()`
+|Methode, mit der auf die aktuelle Welt zugegriffen wird.
+
+|`=`
+|Der Zuweisungsoperator speichert das, was rechts steht, in der Variablen links.
+
+|`getObjects(Raumschiff.class)`
+|Methode der `World`-Klasse. Sie liefert alle Objekte der Klasse `Raumschiff` zurück.
+
+|`Raumschiff.class`
+|Die Klasse der gesuchten Objekte, die an `getObjects()` übergeben wird.
+
+|`size()`
+|Methode einer Liste. Sie zählt, wie viele Objekte in der Liste enthalten sind.
+
+|`showText()`
+|Methode der `World`-Klasse, mit der Text an einer bestimmten Position angezeigt wird.
+
+|`String.valueOf(anzahl)`
+|Wandelt die Zahl in einen String um, damit sie mit `showText()` angezeigt werden kann.
+|===
+
+== Zusammenfassung
+
+[cols="1,4",options="header"]
+|===
+|Begriff |Erläuterung
+
+|`getObjects()`
+|Holt alle Objekte einer bestimmten Klasse aus der Welt.
+
+|`getWorld()`
+|Gibt die aktuelle Welt zurück.
+
+|`Raumschiff.class`
+|Bezeichnet die gesuchte Klasse der Objekte.
+
+|`size()`
+|Zählt die Elemente der Liste.
+
+|`showText()`
+|Zeigt die gezählte Anzahl direkt auf der Welt an.
+|===
